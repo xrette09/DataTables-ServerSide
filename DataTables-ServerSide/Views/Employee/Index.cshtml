@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<table id="dataTable" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Department</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+        <tr class="text-white">
+            <th>ID</th>
+            <th>DEPT_CODE</th>
+            <th>FIRST_NAME</th>
+            <th>LAST_NAME</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+
+    <script>
+        $(document).ready(async function () {
+            $('#dataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("GetEmployeeList", "Employee")',
+                    type: "POST",
+                    error: function (xhr, error, thrown) {
+                        console.log("DataTables Ajax Error:", xhr, error, thrown);
+                    }
+                },
+                columns: [
+                    { "data": "ID" },
+                    { "data": "DEPT_CODE" },
+                    { "data": "FIRST_NAME" },
+                    { "data": "LAST_NAME" }
+                ],
+                initComplete: function () {
+                    var api = this.api();
+
+                    $.ajax({
+                        url: '@Url.Action("GetEmployeeListUniqueValues", "Employee")',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            api.columns().every(function () {
+                                var column = this;
+                                var columnName = column.footer().innerText;
+
+                                var select = $('<select class="form-select"><option value=""></option></select>')
+                                    .appendTo($(column.footer()).empty())
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                if (data.hasOwnProperty(columnName) && Array.isArray(data[columnName])) {
+                                    data[columnName].forEach(function (d) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                                }
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+}

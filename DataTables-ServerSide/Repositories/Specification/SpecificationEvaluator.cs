@@ -1,13 +1,11 @@
-﻿using DataTables_ServerSide.Models;
+﻿using DataTables_ServerSide.Models.Entities;
 using DataTables_ServerSide.Specification;
-using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 
-namespace DataTables_ServerSide.Repositories
+namespace DataTables_ServerSide.Repositories.Specification
 {
-    public class SpecificationEvaluator<T> where T : Entity
+    public class SpecificationEvaluator<T> where T : BaseEntity
     {
         public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
         {
