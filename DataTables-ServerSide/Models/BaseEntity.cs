@@ -1,6 +1,6 @@
 ﻿namespace DataTables_ServerSide.Models
 {
-    public abstract class Entity
+    public abstract class BaseEntity
     {
     }
 }

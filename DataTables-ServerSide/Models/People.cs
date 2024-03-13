@@ -1,6 +1,6 @@
 ﻿namespace DataTables_ServerSide.Models
 {
-    public class People : Entity
+    public class People : BaseEntity
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

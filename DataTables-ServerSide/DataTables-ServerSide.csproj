@@ -133,14 +133,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\People.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IPeopleRepository.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\PeopleRepository.cs" />
-    <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\SpecificationEvaluator.cs" />
+    <Compile Include="Repositories\Interfaces\IPeopleRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IBaseRepository.cs" />
+    <Compile Include="Repositories\Implementations\PeopleRepository.cs" />
+    <Compile Include="Repositories\Implementations\BaseRepository.cs" />
+    <Compile Include="Repositories\Specification\SpecificationEvaluator.cs" />
     <Compile Include="Specification\BaseSpecification.cs" />
     <Compile Include="Specification\ISpecification.cs" />
   </ItemGroup>

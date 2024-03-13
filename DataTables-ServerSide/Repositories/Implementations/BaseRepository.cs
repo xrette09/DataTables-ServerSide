@@ -1,5 +1,7 @@
 ﻿using DataTables_ServerSide.DAL;
 using DataTables_ServerSide.Models;
+using DataTables_ServerSide.Repositories.Interfaces;
+using DataTables_ServerSide.Repositories.Specification;
 using DataTables_ServerSide.Specification;
 using System;
 using System.Collections.Generic;
@@ -7,13 +9,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataTables_ServerSide.Repositories
+namespace DataTables_ServerSide.Repositories.Implementations
 {
-    public class Repository<T> : IRepository<T> where T : Entity
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         protected readonly AppDbContext _dbContext;
 
-        public Repository(AppDbContext dbContext)
+        public BaseRepository(AppDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
